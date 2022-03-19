@@ -1,19 +1,14 @@
 #!/bin/bash
-if [[ $# -ne 2 ]];
-then echo -e "this script must include 2 parametrs:\n1) dir1\n2) dir2"
-elif !([[ -d $1 ]] && [[ -d $2 ]]);
-then echo -e "invalid directories"
+if [[ $# -ne 3 ]]; 
+then echo -e "here must be 3 parametrs: \n1)filename\n2)directory\n3)extension"
+elif ! [[ -d $2 ]]; 
+then echo "invalid directory" >&2
 else
 {
-i=0
-for file1 in $1/* 
-  do for file2 in $2/* 
-      do
-	cmp -s $file1 $file2 && echo "$file1 == $file2" 
-        i=$((i+1))
-      done;
-  done;
-echo "$i files was watched"
+    echo > $1
+    find $2 -maxdepth 1 -type f -name "*.$3" -printf "%f\n" > $1
+    sort -o $1 $1
 }
 fi
 exit 0
+
