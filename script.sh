@@ -1,14 +1,7 @@
 #!/bin/bash
-if [[ $# -ne 3 ]]; 
-then echo -e "here must be 3 parametrs: \n1)filename\n2)directory\n3)extension"
-elif ! [[ -d $2 ]]; 
-then echo "invalid directory" >&2
-else
-{
-    echo > $1
-    find $2 -maxdepth 1 -type f -name "*.$3" -printf "%f\n" > $1
-    sort -o $1 $1
-}
+if [[ $# -ne 2 ]]; 
+then echo -e "This command must include 2 parameters\n1)source file\n2)executable file" >&2
+elif ! [[ -f $1 ]]; 
+then echo "$1 is not a valid file" >&2
+else gcc $1 -o $2 && ./$2;
 fi
-exit 0
-
